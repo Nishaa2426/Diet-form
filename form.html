@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Food Diet Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(120deg, #f8f9fa, #d4edda);
+      padding: 20px;
+    }
+
+    .form-container {
+      background: white;
+      max-width: 800px;
+      margin: auto;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h2, h3 {
+      text-align: center;
+      color: #2d6a4f;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 15px;
+      display: block;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    input[type="checkbox"] {
+      width: auto;
+      margin-right: 5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #bbb;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background: #e9f5ec;
+    }
+
+    button {
+      background-color: #2d6a4f;
+      color: white;
+      font-size: 16px;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      width: 100%;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #40916c;
+    }
+
+    pre {
+      background: #f1f1f1;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Food Diet Form</h2>
+
+    <!-- Implicit JS -->
+    <form id="dietForm" onsubmit="handleForm(event)">
+      <label>Full Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label>Age:</label>
+      <input type="number" id="age" name="age" required>
+
+      <label>Gender:</label>
+      <select id="gender" name="gender" required>
+        <option value="">--Select--</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+      </select>
+
+      <label>Diet Type:</label>
+      <select id="diet" name="diet" required>
+        <option value="">--Select--</option>
+        <option>Vegetarian</option>
+        <option>Vegan</option>
+        <option>Non-Vegetarian</option>
+        <option>Keto</option>
+        <option>Paleo</option>
+        <option>Other</option>
+      </select>
+
+      <label>Allergies:</label>
+      <textarea id="allergies" name="allergies"></textarea>
+
+      <label>Preferred Meals:</label>
+      <input type="checkbox" name="meals" value="Breakfast"> Breakfast
+      <input type="checkbox" name="meals" value="Lunch"> Lunch
+      <input type="checkbox" name="meals" value="Dinner"> Dinner
+      <input type="checkbox" name="meals" value="Snacks"> Snacks
+
+      <label>Health Goals:</label>
+      <textarea id="goals" name="goals"></textarea>
+
+      <h3>Diet Chart Plan</h3>
+      <table>
+        <tr>
+          <th>Day</th>
+          <th>Breakfast</th>
+          <th>Lunch</th>
+          <th>Snack</th>
+          <th>Dinner</th>
+        </tr>
+        <tr>
+          <td>Monday</td>
+          <td><input type="text" name="monday_breakfast" value="Oatmeal"></td>
+          <td><input type="text" name="monday_lunch" value="Rice and Dal"></td>
+          <td><input type="text" name="monday_snack" value="Fruits"></td>
+          <td><input type="text" name="monday_dinner" value="Vegetable Soup"></td>
+        </tr>
+        <tr>
+          <td>Tuesday</td>
+          <td><input type="text" name="tuesday_breakfast" value="Avocado Toast"></td>
+          <td><input type="text" name="tuesday_lunch" value="Chapati and Sabji"></td>
+          <td><input type="text" name="tuesday_snack" value="Smoothie"></td>
+          <td><input type="text" name="tuesday_dinner" value="Paneer Curry"></td>
+        </tr>
+      </table>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <pre id="output"></pre>
+  </div>
+
+  <!-- Explicit JS -->
+  <script>
+    let handleForm = function(event) {
+      event.preventDefault();
+
+      let form = document.getElementById("dietForm");
+      let formData = new FormData(form);
+
+      let name = formData.get("name");
+      let age = Number(formData.get("age"));
+      let gender = formData.get("gender");
+      let diet = formData.get("diet");
+      let allergies = formData.get("allergies");
+      let goals = formData.get("goals");
+
+      let meals = [];
+      document.querySelectorAll("input[name='meals']:checked").forEach(meal => {
+        meals.push(meal.value);
+      });
+
+      let dietPlan = {
+        Monday: {
+          breakfast: formData.get("monday_breakfast"),
+          lunch: formData.get("monday_lunch"),
+          snack: formData.get("monday_snack"),
+          dinner: formData.get("monday_dinner")
+        },
+        Tuesday: {
+          breakfast: formData.get("tuesday_breakfast"),
+          lunch: formData.get("tuesday_lunch"),
+          snack: formData.get("tuesday_snack"),
+          dinner: formData.get("tuesday_dinner")
+        }
+      };
+
+      let result = {
+        name: name,
+        age: age,
+        gender: gender,
+        dietType: diet,
+        allergies: allergies ? allergies.split(',').map(a => a.trim()) : [],
+        preferredMeals: meals,
+        healthGoals: goals,
+        dietPlan: dietPlan
+      };
+
+      document.getElementById("output").textContent = JSON.stringify(result, null, 2);
+    };
+  </script>
+
+</body>
+</html>
