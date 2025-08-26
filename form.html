@@ -219,11 +219,11 @@
         <section class="card span-5">
           <h2>Today</h2>
           <div class="flex" style="flex-wrap:wrap">
-            <span class="pill" id="pillDate">📅 <span id="todayLabel"></span></span>
-            <span class="pill">🔥 Total kcal: <span id="totCal">0</span></span>
-            <span class="pill">💪 Protein: <span id="totProt">0</span> g</span>
-            <span class="pill">🥖 Carbs: <span id="totCarb">0</span> g</span>
-            <span class="pill">🧈 Fat: <span id="totFat">0</span> g</span>
+            <span class="pill" id="pillDate"> <span id="todayLabel"></span></span>
+            <span class="pill"> Total kcal: <span id="totCal">0</span></span>
+            <span class="pill"> Protein: <span id="totProt">0</span> g</span>
+            <span class="pill"> Carbs: <span id="totCarb">0</span> g</span>
+            <span class="pill"> Fat: <span id="totFat">0</span> g</span>
           </div>
           <div class="actions">
             <button type="button" class="secondary" id="saveLocal">Save Draft</button>
@@ -237,7 +237,7 @@
         <section class="card span-12">
           <h2>Meals (Daily)</h2>
           <div class="actions">
-            <button type="button" id="addRow">➕ Add Food Row</button>
+            <button type="button" id="addRow"> Add Food Row</button>
             <button type="button" id="add4">+4 Quick Rows</button>
             <button type="button" id="clearRows" class="warn">🗑 Clear Rows</button>
           </div>
@@ -271,10 +271,10 @@
         <!-- Submit / Export -->
         <section class="card span-12">
           <div class="actions right">
-            <button type="submit">✅ Submit</button>
-            <button type="button" id="exportCsv" class="secondary">⬇️ Export CSV</button>
-            <button type="button" id="exportJson" class="secondary">⬇️ Export JSON</button>
-            <button type="button" id="printView" class="secondary">🖨 Print</button>
+            <button type="submit"> Submit</button>
+            <button type="button" id="exportCsv" class="secondary">Export CSV</button>
+            <button type="button" id="exportJson" class="secondary"> Export JSON</button>
+            <button type="button" id="printView" class="secondary">Print</button>
           </div>
           <div id="submitMsg" class="hidden"></div>
           <div id="review" class="review hidden"></div>
@@ -395,18 +395,18 @@
   document.getElementById("saveLocal").addEventListener("click", function(){
     let data = collectData(false);
     localStorage.setItem("dietFormDraft", JSON.stringify(data));
-    alertBox("Draft saved locally ✅");
+    alertBox("Draft saved locally");
   });
   document.getElementById("loadLocal").addEventListener("click", function(){
     let raw = localStorage.getItem("dietFormDraft");
     if(!raw){ alertBox("No draft found", "error"); return; }
     let data = JSON.parse(raw);
     populateFromData(data);
-    alertBox("Draft loaded ✅");
+    alertBox("Draft loaded");
   });
   document.getElementById("clearLocal").addEventListener("click", function(){
     localStorage.removeItem("dietFormDraft");
-    alertBox("Draft cleared 🗑");
+    alertBox("Draft cleared ");
   });
 
   // Collect data
