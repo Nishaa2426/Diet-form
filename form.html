@@ -1,219 +1,540 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Food Diet Form</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(120deg, #f8f9fa, #d4edda);
-      padding: 20px;
-    }
-
-    .form-container {
-      background: white;
-      max-width: 800px;
-      margin: auto;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    }
-
-    h2, h3 {
-      text-align: center;
-      color: #2d6a4f;
-    }
-
-    label {
-      font-weight: bold;
-      margin-top: 15px;
-      display: block;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    textarea {
-      resize: vertical;
-    }
-
-    input[type="checkbox"] {
-      width: auto;
-      margin-right: 5px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-
-    th, td {
-      border: 1px solid #bbb;
-      padding: 10px;
-      text-align: center;
-    }
-
-    th {
-      background: #e9f5ec;
-    }
-
-    button {
-      background-color: #2d6a4f;
-      color: white;
-      font-size: 16px;
-      padding: 12px;
-      border: none;
-      border-radius: 6px;
-      width: 100%;
-      margin-top: 20px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #40916c;
-    }
-
-    pre {
-      background: #f1f1f1;
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 20px;
-      font-size: 14px;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Advanced Diet Form</title>
+<style>
+  :root{
+    --bg:#f6fbf8;
+    --card:#ffffff;
+    --ink:#1f2937;
+    --muted:#6b7280;
+    --brand:#2d6a4f;
+    --brand-2:#40916c;
+    --ring:#a7f3d0;
+    --border:#e5e7eb;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+    color:var(--ink);
+    background:linear-gradient(120deg,#f0fff4 0%, var(--bg) 100%);
+  }
+  .wrap{
+    max-width:1100px;
+    margin:auto;
+    padding:24px;
+  }
+  header{
+    text-align:center;
+    margin-bottom:18px;
+  }
+  header h1{margin:0 0 6px;font-size:clamp(22px,3vw,32px);color:var(--brand)}
+  header p{margin:0;color:var(--muted)}
+  .grid{
+    display:grid;
+    gap:16px;
+    grid-template-columns:repeat(12,1fr);
+  }
+  .card{
+    grid-column:span 12;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:18px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.05);
+  }
+  @media(min-width:900px){
+    .span-7{grid-column:span 7}
+    .span-5{grid-column:span 5}
+  }
+  h2{
+    margin:0 0 12px;
+    font-size:18px;
+    color:var(--brand);
+  }
+  .row{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    gap:12px;
+    margin-bottom:10px;
+  }
+  label{font-size:12px;color:var(--muted)}
+  input,select,textarea{
+    width:100%;
+    padding:10px 12px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    outline:none;
+    font-size:14px;
+    background:#fff;
+  }
+  input:focus,select:focus,textarea:focus{
+    border-color:var(--brand);
+    box-shadow:0 0 0 4px var(--ring);
+  }
+  .col-6{grid-column:span 6}
+  .col-4{grid-column:span 4}
+  .col-3{grid-column:span 3}
+  .col-2{grid-column:span 2}
+  .col-12{grid-column:span 12}
+  .actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:10px;
+  }
+  button{
+    background:var(--brand);
+    color:#fff;
+    border:none;
+    padding:10px 14px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+  }
+  button.secondary{background:#1118270d;color:#111827;border:1px solid var(--border)}
+  button.warn{background:#dc2626}
+  button:hover{background:var(--brand-2)}
+  button.secondary:hover{background:#11182714}
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:8px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+  }
+  thead th{
+    background:#ecfdf5;
+    color:#064e3b;
+    font-weight:700;
+    padding:10px;
+    border-bottom:1px solid var(--border);
+    font-size:13px;
+    text-align:center;
+  }
+  tbody td{
+    border-bottom:1px solid var(--border);
+    padding:6px;
+    text-align:center;
+  }
+  tbody tr:last-child td{border-bottom:none}
+  .table-input{
+    width:100%;
+    padding:8px 8px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    font-size:13px;
+  }
+  tfoot td{
+    background:#f9fafb;
+    font-weight:700;
+    padding:10px;
+  }
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;
+    background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0;
+    padding:6px 10px;border-radius:999px;font-size:12px;
+  }
+  .right{justify-content:flex-end}
+  .flex{display:flex;gap:8px;align-items:center}
+  .hidden{display:none}
+  .success{
+    padding:10px 12px;border:1px solid #bbf7d0;background:#ecfdf5;color:#065f46;border-radius:10px;margin-top:10px
+  }
+  .error{
+    padding:10px 12px;border:1px solid #fecaca;background:#fef2f2;color:#7f1d1d;border-radius:10px;margin-top:10px
+  }
+  .review{
+    overflow:auto;max-height:360px;margin-top:8px;border:1px dashed var(--border);border-radius:10px;padding:8px;background:#fafafa
+  }
+</style>
 </head>
 <body>
+  <div class="wrap">
+    <header>
+      <h1>Advanced Diet Form</h1>
+      <p>Log your day’s meals, macros & calories — then submit and export.</p>
+    </header>
 
-  <div class="form-container">
-    <h2>Food Diet Form</h2>
+    <form id="dietForm">
+      <div class="grid">
 
-    <!-- Implicit JS -->
-    <form id="dietForm" onsubmit="handleForm(event)">
-      <label>Full Name:</label>
-      <input type="text" id="name" name="name" required>
+        <!-- Profile / Goals -->
+        <section class="card span-7">
+          <h2>Profile & Goals</h2>
+          <div class="row">
+            <div class="col-6">
+              <label>Full Name</label>
+              <input id="name" required placeholder="Your name" />
+            </div>
+            <div class="col-3">
+              <label>Age</label>
+              <input id="age" type="number" min="1" required placeholder="e.g. 25" />
+            </div>
+            <div class="col-3">
+              <label>Gender</label>
+              <select id="gender" required>
+                <option value="">Select</option>
+                <option>Male</option><option>Female</option><option>Other</option>
+              </select>
+            </div>
 
-      <label>Age:</label>
-      <input type="number" id="age" name="age" required>
+            <div class="col-4">
+              <label>Calorie Goal (kcal)</label>
+              <input id="goalCal" type="number" min="0" placeholder="e.g. 2000" />
+            </div>
+            <div class="col-4">
+              <label>Protein Goal (g)</label>
+              <input id="goalProt" type="number" min="0" placeholder="e.g. 120" />
+            </div>
+            <div class="col-4">
+              <label>Water Goal (L)</label>
+              <input id="goalWater" type="number" min="0" step="0.1" placeholder="e.g. 2.5" />
+            </div>
 
-      <label>Gender:</label>
-      <select id="gender" name="gender" required>
-        <option value="">--Select--</option>
-        <option>Male</option>
-        <option>Female</option>
-        <option>Other</option>
-      </select>
+            <div class="col-6">
+              <label>Diet Type</label>
+              <select id="dietType">
+                <option>Balanced</option><option>Vegetarian</option><option>Vegan</option>
+                <option>Low-Carb</option><option>Keto</option><option>Paleo</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <label>Allergies (comma-separated)</label>
+              <input id="allergies" placeholder="e.g. peanuts, dairy" />
+            </div>
 
-      <label>Diet Type:</label>
-      <select id="diet" name="diet" required>
-        <option value="">--Select--</option>
-        <option>Vegetarian</option>
-        <option>Vegan</option>
-        <option>Non-Vegetarian</option>
-        <option>Keto</option>
-        <option>Paleo</option>
-        <option>Other</option>
-      </select>
+            <div class="col-12">
+              <label>Notes</label>
+              <textarea id="notes" rows="2" placeholder="Energy level, sleep, training, etc."></textarea>
+            </div>
+          </div>
+        </section>
 
-      <label>Allergies:</label>
-      <textarea id="allergies" name="allergies"></textarea>
+        <!-- Quick stats -->
+        <section class="card span-5">
+          <h2>Today</h2>
+          <div class="flex" style="flex-wrap:wrap">
+            <span class="pill" id="pillDate">📅 <span id="todayLabel"></span></span>
+            <span class="pill">🔥 Total kcal: <span id="totCal">0</span></span>
+            <span class="pill">💪 Protein: <span id="totProt">0</span> g</span>
+            <span class="pill">🥖 Carbs: <span id="totCarb">0</span> g</span>
+            <span class="pill">🧈 Fat: <span id="totFat">0</span> g</span>
+          </div>
+          <div class="actions">
+            <button type="button" class="secondary" id="saveLocal">Save Draft</button>
+            <button type="button" class="secondary" id="loadLocal">Load Draft</button>
+            <button type="button" class="secondary" id="clearLocal">Clear Draft</button>
+          </div>
+          <div id="alertBox" class="hidden"></div>
+        </section>
 
-      <label>Preferred Meals:</label>
-      <input type="checkbox" name="meals" value="Breakfast"> Breakfast
-      <input type="checkbox" name="meals" value="Lunch"> Lunch
-      <input type="checkbox" name="meals" value="Dinner"> Dinner
-      <input type="checkbox" name="meals" value="Snacks"> Snacks
+        <!-- Meals table -->
+        <section class="card span-12">
+          <h2>Meals (Daily)</h2>
+          <div class="actions">
+            <button type="button" id="addRow">➕ Add Food Row</button>
+            <button type="button" id="add4">+4 Quick Rows</button>
+            <button type="button" id="clearRows" class="warn">🗑 Clear Rows</button>
+          </div>
+          <table id="mealsTable">
+            <thead>
+              <tr>
+                <th style="width:120px">Meal</th>
+                <th>Food</th>
+                <th style="width:80px">Qty</th>
+                <th style="width:110px">Calories</th>
+                <th style="width:110px">Protein (g)</th>
+                <th style="width:110px">Carbs (g)</th>
+                <th style="width:110px">Fat (g)</th>
+                <th style="width:70px">Remove</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3" style="text-align:right">Totals:</td>
+                <td id="sumCal">0</td>
+                <td id="sumProt">0</td>
+                <td id="sumCarb">0</td>
+                <td id="sumFat">0</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </section>
 
-      <label>Health Goals:</label>
-      <textarea id="goals" name="goals"></textarea>
+        <!-- Submit / Export -->
+        <section class="card span-12">
+          <div class="actions right">
+            <button type="submit">✅ Submit</button>
+            <button type="button" id="exportCsv" class="secondary">⬇️ Export CSV</button>
+            <button type="button" id="exportJson" class="secondary">⬇️ Export JSON</button>
+            <button type="button" id="printView" class="secondary">🖨 Print</button>
+          </div>
+          <div id="submitMsg" class="hidden"></div>
+          <div id="review" class="review hidden"></div>
+        </section>
 
-      <h3>Diet Chart Plan</h3>
-      <table>
-        <tr>
-          <th>Day</th>
-          <th>Breakfast</th>
-          <th>Lunch</th>
-          <th>Snack</th>
-          <th>Dinner</th>
-        </tr>
-        <tr>
-          <td>Monday</td>
-          <td><input type="text" name="monday_breakfast" value="Oatmeal"></td>
-          <td><input type="text" name="monday_lunch" value="Rice and Dal"></td>
-          <td><input type="text" name="monday_snack" value="Fruits"></td>
-          <td><input type="text" name="monday_dinner" value="Vegetable Soup"></td>
-        </tr>
-        <tr>
-          <td>Tuesday</td>
-          <td><input type="text" name="tuesday_breakfast" value="Avocado Toast"></td>
-          <td><input type="text" name="tuesday_lunch" value="Chapati and Sabji"></td>
-          <td><input type="text" name="tuesday_snack" value="Smoothie"></td>
-          <td><input type="text" name="tuesday_dinner" value="Paneer Curry"></td>
-        </tr>
-      </table>
-
-      <button type="submit">Submit</button>
+      </div>
     </form>
-
-    <pre id="output"></pre>
   </div>
 
-  <!-- Explicit JS -->
-  <script>
-    let handleForm = function(event) {
-      event.preventDefault();
+<script>
+  // ===== Utilities =====
+  let today = new Date();
+  document.getElementById("todayLabel").textContent = today.toLocaleDateString();
 
-      let form = document.getElementById("dietForm");
-      let formData = new FormData(form);
+  let tbody = document.getElementById("tbody");
+  let totals = { cal:0, prot:0, carb:0, fat:0 };
 
-      let name = formData.get("name");
-      let age = Number(formData.get("age"));
-      let gender = formData.get("gender");
-      let diet = formData.get("diet");
-      let allergies = formData.get("allergies");
-      let goals = formData.get("goals");
+  function makeCellInput(ph, type="text"){
+    let el = document.createElement("input");
+    el.className = "table-input";
+    el.placeholder = ph;
+    el.type = type;
+    if(type==="number"){ el.min="0"; el.step="0.1"; }
+    return el;
+  }
 
-      let meals = [];
-      document.querySelectorAll("input[name='meals']:checked").forEach(meal => {
-        meals.push(meal.value);
+  function addRow(prefMeal){
+    let tr = document.createElement("tr");
+
+    // meal select
+    let tdMeal = document.createElement("td");
+    let sel = document.createElement("select");
+    sel.className = "table-input";
+    ["Breakfast","Lunch","Snack","Dinner"].forEach(function(m){
+      let o = document.createElement("option");
+      o.textContent = m; sel.appendChild(o);
+    });
+    if(prefMeal){ sel.value = prefMeal; }
+    tdMeal.appendChild(sel);
+
+    // inputs
+    let tdFood = document.createElement("td"); let inFood = makeCellInput("e.g. Oats & Milk");
+    let tdQty  = document.createElement("td"); let inQty  = makeCellInput("1 cup","number");
+    let tdCal  = document.createElement("td"); let inCal  = makeCellInput("150","number");
+    let tdPro  = document.createElement("td"); let inPro  = makeCellInput("5","number");
+    let tdCarb = document.createElement("td"); let inCarb = makeCellInput("27","number");
+    let tdFat  = document.createElement("td"); let inFat  = makeCellInput("3","number");
+
+    tdFood.appendChild(inFood); tdQty.appendChild(inQty);
+    tdCal.appendChild(inCal); tdPro.appendChild(inPro); tdCarb.appendChild(inCarb); tdFat.appendChild(inFat);
+
+    // remove btn
+    let tdRm = document.createElement("td");
+    let rm = document.createElement("button");
+    rm.type="button"; rm.textContent="✖"; rm.className="secondary";
+    rm.addEventListener("click", function(){ tr.remove(); computeTotals(); });
+    tdRm.appendChild(rm);
+
+    tr.appendChild(tdMeal); tr.appendChild(tdFood); tr.appendChild(tdQty);
+    tr.appendChild(tdCal); tr.appendChild(tdPro); tr.appendChild(tdCarb); tr.appendChild(tdFat);
+    tr.appendChild(tdRm);
+
+    // update totals on change
+    [inCal,inPro,inCarb,inFat].forEach(function(el){
+      el.addEventListener("input", computeTotals);
+    });
+
+    tbody.appendChild(tr);
+  }
+
+  function computeTotals(){
+    let rows = Array.from(tbody.querySelectorAll("tr"));
+    let tCal=0, tProt=0, tCarb=0, tFat=0;
+    rows.forEach(function(r){
+      let v = r.querySelectorAll("input.table-input");
+      // order: food, qty, cal, pro, carb, fat
+      let cal  = parseFloat(v[2].value)||0;
+      let prot = parseFloat(v[3].value)||0;
+      let carb = parseFloat(v[4].value)||0;
+      let fat  = parseFloat(v[5].value)||0;
+      tCal+=cal; tProt+=prot; tCarb+=carb; tFat+=fat;
+    });
+    totals = {cal:tCal, prot:tProt, carb:tCarb, fat:tFat};
+    document.getElementById("sumCal").textContent  = tCal.toFixed(1);
+    document.getElementById("sumProt").textContent = tProt.toFixed(1);
+    document.getElementById("sumCarb").textContent = tCarb.toFixed(1);
+    document.getElementById("sumFat").textContent  = tFat.toFixed(1);
+
+    document.getElementById("totCal").textContent  = tCal.toFixed(0);
+    document.getElementById("totProt").textContent = tProt.toFixed(0);
+    document.getElementById("totCarb").textContent = tCarb.toFixed(0);
+    document.getElementById("totFat").textContent  = tFat.toFixed(0);
+  }
+
+  // Seed a few rows initially
+  ["Breakfast","Lunch","Snack","Dinner"].forEach(function(m){ addRow(m); });
+  computeTotals();
+
+  // Buttons
+  document.getElementById("addRow").addEventListener("click", function(){ addRow(); });
+  document.getElementById("add4").addEventListener("click", function(){
+    for(let i=0;i<4;i++){ addRow(); }
+  });
+  document.getElementById("clearRows").addEventListener("click", function(){
+    tbody.innerHTML = ""; computeTotals();
+  });
+
+  // Alerts
+  function alertBox(msg, type){
+    let box = document.getElementById("alertBox");
+    box.className = type==="error" ? "error" : "success";
+    box.textContent = msg;
+    box.classList.remove("hidden");
+    setTimeout(function(){ box.classList.add("hidden"); }, 2500);
+  }
+
+  // Local Storage
+  document.getElementById("saveLocal").addEventListener("click", function(){
+    let data = collectData(false);
+    localStorage.setItem("dietFormDraft", JSON.stringify(data));
+    alertBox("Draft saved locally ✅");
+  });
+  document.getElementById("loadLocal").addEventListener("click", function(){
+    let raw = localStorage.getItem("dietFormDraft");
+    if(!raw){ alertBox("No draft found", "error"); return; }
+    let data = JSON.parse(raw);
+    populateFromData(data);
+    alertBox("Draft loaded ✅");
+  });
+  document.getElementById("clearLocal").addEventListener("click", function(){
+    localStorage.removeItem("dietFormDraft");
+    alertBox("Draft cleared 🗑");
+  });
+
+  // Collect data
+  function collectData(includeReview){
+    let meals = [];
+    Array.from(tbody.querySelectorAll("tr")).forEach(function(r){
+      let sel = r.querySelector("select");
+      let inputs = r.querySelectorAll("input.table-input");
+      meals.push({
+        meal: sel.value,
+        food: inputs[0].value.trim(),
+        qty:  Number(inputs[1].value)||0,
+        calories: Number(inputs[2].value)||0,
+        protein:  Number(inputs[3].value)||0,
+        carbs:    Number(inputs[4].value)||0,
+        fat:      Number(inputs[5].value)||0
       });
-
-      let dietPlan = {
-        Monday: {
-          breakfast: formData.get("monday_breakfast"),
-          lunch: formData.get("monday_lunch"),
-          snack: formData.get("monday_snack"),
-          dinner: formData.get("monday_dinner")
-        },
-        Tuesday: {
-          breakfast: formData.get("tuesday_breakfast"),
-          lunch: formData.get("tuesday_lunch"),
-          snack: formData.get("tuesday_snack"),
-          dinner: formData.get("tuesday_dinner")
-        }
-      };
-
-      let result = {
-        name: name,
-        age: age,
-        gender: gender,
-        dietType: diet,
-        allergies: allergies ? allergies.split(',').map(a => a.trim()) : [],
-        preferredMeals: meals,
-        healthGoals: goals,
-        dietPlan: dietPlan
-      };
-
-      document.getElementById("output").textContent = JSON.stringify(result, null, 2);
+    });
+    let data = {
+      date: new Date().toISOString(),
+      profile: {
+        name: document.getElementById("name").value.trim(),
+        age: Number(document.getElementById("age").value)||0,
+        gender: document.getElementById("gender").value,
+        dietType: document.getElementById("dietType").value,
+        allergies: document.getElementById("allergies").value.split(",").map(function(s){return s.trim();}).filter(Boolean),
+        notes: document.getElementById("notes").value.trim()
+      },
+      goals: {
+        calories: Number(document.getElementById("goalCal").value)||0,
+        protein:  Number(document.getElementById("goalProt").value)||0,
+        water:    Number(document.getElementById("goalWater").value)||0
+      },
+      totals: totals,
+      meals: meals
     };
-  </script>
+    if(includeReview){ data.review = makeReviewTableHTML(meals); }
+    return data;
+  }
 
-</body>
-</html>
+  // Submit
+  document.getElementById("dietForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    // Simple validation
+    if(!document.getElementById("name").value.trim() || !document.getElementById("age").value.trim() || !document.getElementById("gender").value){
+      alertBox("Please fill Name, Age and Gender.", "error");
+      return;
+    }
+    if(tbody.querySelectorAll("tr").length===0){
+      alertBox("Add at least one meal row.", "error");
+      return;
+    }
+    computeTotals();
+    let payload = collectData(true);
+
+    // Show message
+    let msg = document.getElementById("submitMsg");
+    msg.className = "success";
+    msg.innerHTML = "Submitted! Your day is captured below. (You can also export CSV/JSON)";
+    msg.classList.remove("hidden");
+
+    // Show review table
+    let review = document.getElementById("review");
+    review.innerHTML = payload.review;
+    review.classList.remove("hidden");
+
+    // Optionally POST to a server endpoint:
+    // fetch('/api/diet', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
+  });
+
+  // Build review HTML table
+  function makeReviewTableHTML(meals){
+    let rows = meals.map(function(m,i){
+      return `<tr>
+        <td>${i+1}</td>
+        <td>${m.meal}</td>
+        <td style="text-align:left">${escapeHtml(m.food)}</td>
+        <td>${m.qty}</td>
+        <td>${m.calories}</td>
+        <td>${m.protein}</td>
+        <td>${m.carbs}</td>
+        <td>${m.fat}</td>
+      </tr>`;
+    }).join("");
+    return `
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Meal</th><th>Food</th><th>Qty</th>
+            <th>Calories</th><th>Protein</th><th>Carbs</th><th>Fat</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4" style="text-align:right;font-weight:700">Totals</td>
+            <td>${totals.cal.toFixed(1)}</td>
+            <td>${totals.prot.toFixed(1)}</td>
+            <td>${totals.carb.toFixed(1)}</td>
+            <td>${totals.fat.toFixed(1)}</td>
+          </tr>
+        </tfoot>
+      </table>`;
+  }
+
+  // Export CSV
+  document.getElementById("exportCsv").addEventListener("click", function(){
+    computeTotals();
+    let data = collectData(false);
+    let lines = [
+      ["Date", new Date(data.date).toLocaleString()].join(","),
+      [],
+      ["Name","Age","Gender","Diet Type","Allergies","Notes"].join(","),
+      [q(data.profile.name), data.profile.age, data.profile.gender, q(data.profile.dietType), q(data.profile.allergies.join("; ")), q(data.profile.notes)].join(","),
+      [],
+      ["Goals (kcal)","Protein (g)","Water (L)"].join(","),
+      [data.goals.calories, data.goals.protein, data.goals.water].join(","),
+      [],
+      ["Meal","Food","Qty","Calories","Protein","Carbs","Fat"].join(",")
+    ];
+    data.meals.forEach(function(m){
+      lines.push([m.meal, q(m.food), m.qty, m.calories, m.protein, m.carbs, m.fat].join(","));
+    });
+    lines.push([]);
+    lines.push(["Totals","","", data.totals.cal, data.totals.prot, data.totals.carb, data.totals.fat].join(","));
+    let csv = lines.map(function(l){ return Array.isArray(l)? l : l; }).join("\n");
+    downloadFile("diet_day.csv", "text/csv;charset=utf-8;", csv);
+  });
+
+  // Export JSON
+  document.getElementById
